@@ -1,5 +1,5 @@
 # EX01 Developing a Simple Webserver
-## Date:22.02.2025
+## Date:17.04.2025
 
 ## AIM:
 To develop a simple webserver to serve html pages and display the list of protocols in TCP/IP Protocol Suite.
@@ -37,27 +37,48 @@ Open a browser and navigate to http://127.0.0.1:8000 (or the assigned port).
 
 ## PROGRAM:
 ```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+from http.server import HTTPServer, BaseHTTPRequestHandler 
+content="""
+<html>
+<title>TCP/IP PROTOCOL</title>
 <body>
-    <h1>Fundamental of Web Application</h1>
-    <h2>Fundamental of Web Application</h2>
-    <h3>Fundamental of Web Application</h3>
-    <h4>Fundamental of Web Application</h4>
-    <h5>Fundamental of Web Application</h5>
-    <h6>Fundamental of Web Application</h6>
+<table border="2" align="center">
+<caption>TCP/IP PROTOCOL SUITE</caption>
+<br>
+<tr bgcolor="pink">
+<th>S.No</th><th>LAYER</th><th>PROTOCOLS</th>
+</tr> <tr>
+<td>1</td><td>Application Layer</td><td>HTTP,FTP,DNS,Telnet,SSH</td>
+</tr>
+<tr>
+<td>2</td><td>Transport Layer</td><td>TCP,UDP</td>
+</tr>
+<tr>
+<td>3</td><td>Internet Layer</td><td>ICMP,IGMP,ARP,IPv4/IPv6</td>
+</tr>
+<tr>
+<td>4</td><td>Network Access Layer</td><td>MAC/Ethernet,FDDI,Frame Relay</td>
+</tr>
+</table>
 </body>
 </html>
+"""
+class myhandler (BaseHTTPRequestHandler):
+     def do_GET(self):
+        print("request received") 
+        self.send_response(200)
+        self.send_header('content-type', 'text/html; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(content.encode())
+server_address = ('', 8000)
+httpd = HTTPServer(server_address,myhandler)
+print("my webserver is running...")
+httpd.serve_forever()
 ```
-
 ## OUTPUT:
+![Screenshot 2025-05-13 140653](https://github.com/user-attachments/assets/3d32bf43-b122-48c6-a13e-2fdfab321bce)
+![Screenshot 2025-05-13 140738](https://github.com/user-attachments/assets/4fa11ccd-b7d1-42e7-a9b0-ce7131379443)
 
-![Screenshot 2025-03-29 111936](https://github.com/user-attachments/assets/e86ac091-9e0b-4919-b3be-73c161179f99)
 
 ## RESULT:
 The program for implementing simple webserver is executed successfully.
